@@ -17,6 +17,7 @@ endif
 test: compile
 	$(CC) $(CFLAGS) -c $(TESTFILES) -o $(TESTFILES:.c=.o)
 	$(CC) $(CFLAGS) -o main $(TESTFILES:.c=.o) -L. -lcute
+	./main
 
 clean:
 	rm $(OBJFILES) $(TESTFILES:.c=.o) libcute.a libcute.so main
