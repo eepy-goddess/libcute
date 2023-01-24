@@ -15,6 +15,9 @@ else ifeq ($(IS_DYNAMIC), true)
 endif
 
 test: compile
+ifeq ($(IS_DYNAMIC), true)
+	@echo "Be sure to set \$LD_LIBRARY_PATH to this current directory"
+endif
 	$(CC) $(CFLAGS) -c $(TESTFILES) -o $(TESTFILES:.c=.o)
 	$(CC) $(CFLAGS) -o main $(TESTFILES:.c=.o) -L. -lcute
 	./main
