@@ -1,14 +1,22 @@
+include ./config.mk
 CFLAGS = -O2
-LIBFILES = $(shell find ./src/*.c)
+DEBUGFLAGS = -Wall -Wextra -Wpedantic
+SRCFILES = $(shell find ./src/*.c)
 TESTFILES = $(shell find ./test/*.c)
+OBJFILES = $(SRCFILES:.c=.o)
 
-static_compilation: $(LIBFILES)
-	$(CC) $(CFLAGS) -c $(LIBFILES) -o $(LIBFILES:.c=.o)
-	$(AR) rcs libcute.a $(LIBFILES:.c=.o)
+compile: $(SRCFILES)
+ifeq ($(IS_DYNAMIC), false)
+	$(CC) $(DEBUGFLAGS) $(CFLAGS) -c $(SRCFILES) -o $(OBJFILES)
+	$(AR) rcs libcute.a $(OBJFILES)
+else ifeq ($(IS_DYNAMIC), true)
+	$(CC) $(DEBUGFLAGS) $(CFLAGS) -fPIC -c $(SRCFILES) -o $(OBJFILES)
+	$(CC) $(CFLAGS) -shared -o libcute.so $(OBJFILES)
+endif
 
-test: static_compilation
+test: compile
 	$(CC) $(CFLAGS) -c $(TESTFILES) -o $(TESTFILES:.c=.o)
 	$(CC) $(CFLAGS) -o main $(TESTFILES:.c=.o) -L. -lcute
 
 clean:
-	rm $(LIBFILES:.c=.o) $(TESTFILES:.c=.o) libcute.a main
+	rm $(OBJFILES) $(TESTFILES:.c=.o) libcute.a libcute.so main
