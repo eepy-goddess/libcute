@@ -1,8 +1,8 @@
 include ./config.mk
 CFLAGS = -O2
 DEBUGFLAGS = -Wall -Wextra -Wpedantic
-SRCFILES = $(shell find ./src/*.c)
-TESTFILES = $(shell find ./test/*.c)
+SRCFILES = $(wildcard ./src/*.c)
+TESTFILES = $(wildcard ./test/*.c)
 OBJFILES = $(SRCFILES:.c=.o)
 
 compile: $(SRCFILES)
