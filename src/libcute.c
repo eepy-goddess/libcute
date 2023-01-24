@@ -15,7 +15,7 @@ extern CuteProfile cute_new_profile(char *name, bool show_time) {
 extern CuteProfile *cute_new_dynamic_profile(char *name, bool show_time) {
     CuteProfile *profile = (CuteProfile *) malloc(sizeof(CuteProfile));
     if(profile == NULL) {
-        fprintf(stderr, "Unable to make heap-allocated libcute profile! Possibly not enough memory?");
+        fprintf(stderr, "Unable to make heap-allocated libcute profile! Possibly not enough memory?\n");
         return NULL;
     }
     profile->name = name;
