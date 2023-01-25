@@ -19,4 +19,4 @@ extern void cute_destroy_dynamic_profile(CuteProfile *profile);
 
 extern void cute_log(CuteProfile *profile, const char *message);
 
-extern void cute_err_log(CuteProfile *profile, const char *message, int err_code);
+extern void cute_err_log(CuteProfile *profile, const char *message, unsigned int err_code);

@@ -1,3 +1,4 @@
+#include <errno.h>
 #include "libcute.h"
 #include <stdbool.h>
 #include <stdio.h>
@@ -14,9 +15,9 @@ extern CuteProfile cute_new_profile(char *name, bool show_time) {
 
 extern CuteProfile *cute_new_dynamic_profile(char *name, bool show_time) {
     CuteProfile *profile = (CuteProfile *) malloc(sizeof(CuteProfile));
-    if(profile == NULL) {
-        fprintf(stderr, "Unable to make heap-allocated libcute profile! Possibly not enough memory?\n");
-        return NULL;
+    if(profile == 0) {
+        fprintf(stderr, "Error: %d\nUnable to make heap-allocated libcute profile! Possibly not enough memory?\nExiting to prevent further damage to the program\n", ENOMEM);
+        exit(ENOMEM);
     }
     profile->name = name;
     profile->show_time = show_time;
@@ -25,8 +26,12 @@ extern CuteProfile *cute_new_dynamic_profile(char *name, bool show_time) {
 }
 
 extern void cute_destroy_dynamic_profile(CuteProfile *profile) {
-    if (profile->is_dynamic) {
+    if (!profile->is_dynamic) {
         cute_err_log(profile, "Attempted to free a libcute profile stored on the stack. Please fix.", 0);
+        return;
+    }
+    if (profile == 0) {
+        fprintf(stderr, "Attempted to free a null libcute profile pointer. Please fix.");
         return;
     }
     free(profile);
@@ -42,11 +47,12 @@ extern void cute_log(CuteProfile *profile, const char *message) {
 }
 
 /* I'll do error code parsing soon, leave me alone TwT */
-extern void cute_err_log(CuteProfile *profile, const char *message, int err_code) {
+extern void cute_err_log(CuteProfile *profile, const char *message, unsigned int err_code) {
     time_t rawtime;
     struct tm *timeinfo;
     time(&rawtime);
     timeinfo = localtime(&rawtime);
     char* name = profile->name;
-    profile->show_time ? fprintf(stderr, "%s %s: %s\n", asctime(timeinfo), name, message) : fprintf(stderr, "%s: %s\n", name, message);
+    profile->show_time ? fprintf(stderr, "%s Error code: %d, %s: %s\n", asctime(timeinfo), err_code, name, message) : 
+        fprintf(stderr, "Error code: %d, %s: %s\n", err_code, name, message);
 }

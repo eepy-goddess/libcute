@@ -16,11 +16,11 @@ endif
 
 test: compile
 ifeq ($(IS_DYNAMIC), true)
-	@echo "Be sure to set \$LD_LIBRARY_PATH to this current directory"
+	@echo -e "\n-------------------------------\nBe sure to set \$LD_LIBRARY_PATH to this current directory\n-----------------------------------\n"
 endif
 	$(CC) $(CFLAGS) -c $(TESTFILES) -o $(TESTFILES:.c=.o)
 	$(CC) $(CFLAGS) -o main $(TESTFILES:.c=.o) -L. -lcute
 	./main
 
 clean:
-	rm $(OBJFILES) $(TESTFILES:.c=.o) libcute.a libcute.so main
+	rm -f $(OBJFILES) $(TESTFILES:.c=.o) main libcute.a libcute.so
