@@ -1,0 +1,19 @@
+.TH LIBCUTE 1 "30 January 2023" "1.0" "A logging library useful especially for command line apps"
+.SH DESCRIPTION
+Libcute is a library that has utilities for logging, user input, and argument parsing. Its convenient utilities allow programmers
+to free up time that is usually spent on making logging systems, argument parsing and the like for their programs. The goal of this library is to 
+have a cute and readable code base as well as having rust-level safe code and providing cute and convenient logging.
+
+.SH STRUCTS
+CuteProfile, CuteColorScheme
+
+.SH FUNCTIONS
+cute_new_profile(), cute_new_dynamic_profile(), cute_destroy_dynamic_profile(), cute_log(), cute_err_log()
+
+.SH STRUCT INFO
+.TP
+.B CuteProfile
+Contains the data that determines how logs will be printed. It is preferred that you make a new CuteProfile using the functions "cute_new_profile()" or 
+"cute_new_dynamic_profile()" rather than initializing each member of the struct manually.
+Members are "color_scheme" of the type "CuteColorScheme", "name" of the type "char*", "show_time" of the type "bool", and "is_dynamic" of the type "bool".
+.B NOTE: DO NOT CHANGE "is_dynamic", THAT IS FOR INTERNAL USE ONLY
