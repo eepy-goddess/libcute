@@ -8,7 +8,7 @@
 
 static time_t rawtime;
 
-extern CuteProfile cute_new_profile(char *name, bool show_time) {
+CuteProfile cute_new_profile(char *name, bool show_time) {
     CuteProfile profile;
     profile.name = name;
     profile.show_time = show_time;
@@ -16,11 +16,11 @@ extern CuteProfile cute_new_profile(char *name, bool show_time) {
     return profile;
 }
 
-extern CuteProfile *cute_new_dynamic_profile(char *name, bool show_time) {
+CuteProfile *cute_new_dynamic_profile(char *name, bool show_time) {
     CuteProfile *profile = (CuteProfile *) malloc(sizeof(CuteProfile));
     if (profile == 0) {
         fprintf(stderr, "Error: %d\nUnable to make heap-allocated libcute profile! Possibly not enough memory?\nExiting to prevent further damage to the program\n", ENOMEM);
-        exit(ENOMEM);
+        abort();
     }
     profile->name = name;
     profile->show_time = show_time;
@@ -28,10 +28,10 @@ extern CuteProfile *cute_new_dynamic_profile(char *name, bool show_time) {
     return profile;
 }
 
-extern void cute_destroy_dynamic_profile(CuteProfile *profile) {
+void cute_destroy_dynamic_profile(CuteProfile *profile) {
     if (profile == 0) {
         fprintf(stderr, "Attempted to free a null libcute profile pointer. Please fix.");
-        return;
+        abort();
     }
     if (!profile->is_dynamic) {
         cute_err_log(profile, "Attempted to free a libcute profile stored on the stack. Please fix.", 0);
@@ -40,7 +40,7 @@ extern void cute_destroy_dynamic_profile(CuteProfile *profile) {
     free(profile);
 }
 
-extern void cute_log(CuteProfile *profile, const char *message) {
+void cute_log(CuteProfile *profile, const char *message) {
     struct tm *timeinfo;
     char *time_str;
     char *name = profile->name;
@@ -57,7 +57,7 @@ extern void cute_log(CuteProfile *profile, const char *message) {
 }
 
 /* I'll do error code parsing soon, leave me alone TwT */
-extern void cute_err_log(CuteProfile *profile, const char *message, unsigned int err_code) {
+void cute_err_log(CuteProfile *profile, const char *message, unsigned int err_code) {
     struct tm *timeinfo;
     char *time_str;
     char *name = profile->name;
