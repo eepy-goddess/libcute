@@ -42,38 +42,33 @@ extern void cute_destroy_dynamic_profile(CuteProfile *profile) {
 
 extern void cute_log(CuteProfile *profile, const char *message) {
     struct tm *timeinfo;
-
-    time(&rawtime);
-    timeinfo = localtime(&rawtime);
-
-    char *time_str = asctime(timeinfo);
+    char *time_str;
     char *name = profile->name;
     
-    for (int i = 0; i < (int) strlen(time_str); i++) {
-        if (time_str[i] == '\n') {
-            time_str[i] = '\0';
-        }
-    }
+    if (profile->show_time){
+        time(&rawtime);
+        timeinfo = localtime(&rawtime);
+        time_str = asctime(timeinfo);
 
-    profile->show_time ? printf("%s %s: %s\n", time_str, name, message) : printf("%s: %s\n", name, message);
+        printf("%.*s %s: %s\n", (int) strlen(time_str) - 1, time_str, name, message);
+    } else {
+        printf("%s: %s\n", name, message);
+    }
 }
 
 /* I'll do error code parsing soon, leave me alone TwT */
 extern void cute_err_log(CuteProfile *profile, const char *message, unsigned int err_code) {
     struct tm *timeinfo;
-
-    time(&rawtime);
-    timeinfo = localtime(&rawtime);
-    
-    char *time_str = asctime(timeinfo);
+    char *time_str;
     char *name = profile->name;
 
-    for (int i = 0; i < (int) strlen(time_str); i++) {
-        if (time_str[i] == '\n') {
-            time_str[i] = '\0';
-        }
-    }
-
-    profile->show_time ? fprintf(stderr, "%s Error code: %d, %s: %s\n", time_str, err_code, name, message) : 
+    if (profile->show_time){
+        time(&rawtime);
+        timeinfo = localtime(&rawtime);
+        time_str = asctime(timeinfo);
+        
+        fprintf(stderr, "%.*s Error code: %d, %s: %s\n", (int) strlen(time_str) - 1, time_str, err_code, name, message);
+    } else {
         fprintf(stderr, "Error code: %d, %s: %s\n", err_code, name, message);
+    }
 }
