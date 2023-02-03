@@ -17,4 +17,5 @@ compiled library file(libcute.a if compiled statically, libcute.so if compiled d
 copy all files with the .h extention into /usr/include/libcute
 
 ## Documentation
-Dodumentation is also incomplete, but compress libcute.3 with gzip, then copy the compressed file into /usr/share/man/man3/
+Documentation is also incomplete, but compress libcute.3 with gzip, then copy the compressed file into /usr/share/man/man3/, then execute
+`man libcute` for the man page
