@@ -15,3 +15,6 @@ no dependencies needed :)
 There is no installation rule in the makefile yet, but if you want to install this very incomplete library, copy the 
 compiled library file(libcute.a if compiled statically, libcute.so if compiled dynamically) to /usr/lib, and if you want the headers, 
 copy all files with the .h extention into /usr/include/libcute
+
+## Documentation
+Dodumentation is also incomplete, but compress libcute.3 with gzip, then copy the compressed file into /usr/share/man/man3/
