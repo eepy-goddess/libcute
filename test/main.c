@@ -8,7 +8,7 @@
 
 int main() {
     CuteProfile *profile;
-    cute_log(&profile, LOG, "running with libcute");
+    cute_log(&profile, LO, "running with libcute");
     cute_log(&profile, ERR, "testing error logging");
     cute_log(&profile, LOG, "testing time logging");
     sleep(3);
