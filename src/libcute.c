@@ -25,6 +25,7 @@ CuteProfile *cute_new_dynamic_profile(char *name, bool show_time) {
     profile->name = name;
     profile->show_time = show_time;
     profile->is_dynamic = true;
+
     return profile;
 }
 
@@ -34,41 +35,53 @@ void cute_destroy_dynamic_profile(CuteProfile *profile) {
         abort();
     }
     if (!profile->is_dynamic) {
-        cute_err_log(profile, "Attempted to free a libcute profile stored on the stack. Please fix.", 0);
+        cute_log(profile, ERR, "Attempted to free a libcute profile stored on the stack. Please fix.");
         return;
     }
+    
     free(profile);
 }
 
-void cute_log(CuteProfile *profile, const char *message) {
-    struct tm *timeinfo;
-    char *time_str;
-    char *name = profile->name;
+char *cute_log_level_str(enum CuteLogLevel level) {
+    char *log_level;
     
-    if (profile->show_time){
-        time(&rawtime);
-        timeinfo = localtime(&rawtime);
-        time_str = asctime(timeinfo);
-
-        printf("%.*s %s: %s\n", (int) strlen(time_str) - 1, time_str, name, message);
-    } else {
-        printf("%s: %s\n", name, message);
+    switch (level) {
+        default:
+            log_level = "";
+            break;
+        case LOG:
+            log_level = "[LOG]";
+            break;
+        case INFO:
+            log_level = "[INFO]";
+            break;
+        case WARN:
+            log_level = "[WARNING]";
+            break;
+        case ERR:
+            log_level = "[ERROR]";
+            break;
+        case DEBUG:
+            log_level = "[DEBUG]";
+            break;
     }
+ 
+    return log_level;
 }
 
-/* I'll do error code parsing soon, leave me alone TwT */
-void cute_err_log(CuteProfile *profile, const char *message, unsigned int err_code) {
+void cute_log(CuteProfile *profile, enum CuteLogLevel level, const char *message) {
     struct tm *timeinfo;
     char *time_str;
     char *name = profile->name;
+    char *level_str = cute_log_level_str(level);
 
     if (profile->show_time){
         time(&rawtime);
         timeinfo = localtime(&rawtime);
         time_str = asctime(timeinfo);
-        
-        fprintf(stderr, "%.*s Error code: %d, %s: %s\n", (int) strlen(time_str) - 1, time_str, err_code, name, message);
+
+        printf("[%.*s] %s [%s]: %s\n", (int) strlen(time_str) - 1, time_str, level_str, name, message);
     } else {
-        fprintf(stderr, "Error code: %d, %s: %s\n", err_code, name, message);
+        printf("%s [%s]: %s\n", level_str, name, message);
     }
 }
