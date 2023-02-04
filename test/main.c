@@ -7,7 +7,7 @@
 #endif // _WIN32
 
 int main() {
-    CuteProfile profile = cute_new_profile("test", true);
+    CuteProfile *profile;
     cute_log(&profile, LOG, "running with libcute");
     cute_log(&profile, ERR, "testing error logging");
     cute_log(&profile, LOG, "testing time logging");
@@ -18,6 +18,7 @@ int main() {
     cute_log(dyn_profile, INFO, "Freeing dynamic profile");
     cute_destroy_dynamic_profile(dyn_profile);
     cute_log(&profile, LOG, "The test is now over uwu");
+    cute_destroy_dynamic_profile(profile);
     printf("size: %zu", sizeof(CuteProfile));
     return 0;
 }
