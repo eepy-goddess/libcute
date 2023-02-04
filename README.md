@@ -1,4 +1,6 @@
 # Libcute
+![Badge Workflow]
+
 Libcute is a library that has utilities for logging, user input, and argument parsing. Its convenient utilities allow programmers
 to free up time that is usually spent on making logging systems, argument parsing and the like for their programs. The goal of this library is to 
 have a cute and readable code base as well as having rust-level safe code and providing cute and convenient logging.
@@ -19,3 +21,6 @@ copy all files with the .h extention into /usr/include/libcute
 ## Documentation
 Documentation is also incomplete, but compress libcute.3 with gzip, then copy the compressed file into /usr/share/man/man3/, then execute
 `man libcute` for the man page
+
+
+[Badge Workflow]: https://github.com/a-weeb-programmer/libcute/actions/workflows/makefile.yml/badge.svg
