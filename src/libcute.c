@@ -103,7 +103,8 @@ void cute_log(CuteProfile *profile, enum CuteLogLevel level, const char *message
     strcat(log_str, log_str_tail);
 
     printf("%s\n", log_str);
-    
+
+    va_end(args);
     free(log_str);
     free(log_str_head);
     free(log_str_tail);
