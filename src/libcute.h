@@ -28,4 +28,4 @@ extern void cute_destroy_dynamic_profile(CuteProfile *profile);
 
 extern char *cute_log_level_str(enum CuteLogLevel level);
 
-extern void cute_log(CuteProfile *profile, enum CuteLogLevel level, const char *message);
+extern void cute_log(CuteProfile *profile, enum CuteLogLevel level, const char *message_fmt, ...);
