@@ -7,7 +7,7 @@
 #endif // _WIN32
 
 int main() {
-    CuteProfile *profile = cute_new_dynamic_profile("test", true);
+    CuteProfile *profile = cute_new_dynamic_profile("test", true)
     cute_log(profile, LOG, "running with libcute");
     cute_log(profile, ERR, "testing error logging");
     cute_log(profile, LOG, "testing time logging");
