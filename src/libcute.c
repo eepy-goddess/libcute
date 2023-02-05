@@ -10,7 +10,7 @@ static time_t rawtime;
 
 CuteProfile cute_new_profile(char *name, bool show_time) {
     CuteProfile profile;
-    profile.ame = name;
+    profile.name = name;
     profile.show_time = show_time;
     profile.is_dynamic = false;
     return profile;
@@ -58,7 +58,7 @@ char *cute_log_level_str(enum CuteLogLevel level) {
         case WARN:
             log_level = "[WARNING]";
             break;
-        case ER:
+        case ERR:
             log_level = "[ERROR]";
             break;
         case DEBUG:
