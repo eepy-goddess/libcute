@@ -54,7 +54,7 @@ char *cute_log_level_str(enum CuteLogLevel level) {
             break;
         case INFO:
             log_level = "[INFO]";
-            break
+            break;
         case WARN:
             log_level = "[WARNING]";
             break;
