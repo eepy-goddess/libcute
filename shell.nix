@@ -4,5 +4,6 @@ pkgs.mkShell rec {
     stdenv
     clang-tools
     gnumake
+    valgrind
   ];
 }
