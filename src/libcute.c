@@ -87,25 +87,25 @@ void cute_log(CuteProfile *profile, CuteLogLevel level, const char *message_fmt,
         timeinfo = localtime(&rawtime);
         time_str = asctime(timeinfo);
         head_size = (sizeof(char) * (strlen(time_str) + strlen(level_str) + strlen(name) + strlen("[]  []: ")));
-        log_str_head = malloc(head_size);
+        log_str_head = (char *) malloc(head_size);
         cute_exit_if_null(log_str_head, "Unable to allocate enough memory to make the log string head, exiting");
         
         sprintf(log_str_head, "[%.*s] %s [%s]: ", (int) strlen(time_str) - 1, time_str, level_str, name);
     } else {
         head_size = (sizeof(char) * (strlen(level_str) + strlen(name) + strlen(" []: ")));
-        log_str_head = malloc(head_size);
+        log_str_head = (char *) malloc(head_size);
         cute_exit_if_null(log_str_head, "Unable to allocate enough memory to make the log string head, exiting");
 
         sprintf(log_str_head, "%s [%s]: ", level_str, name);
     }
     
     tail_size = (sizeof(char) * (strlen(message_fmt) + sizeof(args)));
-    log_str_tail = malloc(tail_size);
+    log_str_tail = (char *) malloc(tail_size);
     cute_exit_if_null(log_str_tail, "Unable to allocate enough memory to make the log string tail, exiting");
     
     vsprintf(log_str_tail, message_fmt, args);
 
-    log_str = malloc((sizeof(char) * (strlen(log_str_head) + strlen(log_str_tail))) + 1);
+    log_str = (char *) malloc((sizeof(char) * (strlen(log_str_head) + strlen(log_str_tail))) + 1);
     cute_exit_if_null(log_str, "Unable to allocate enough memory to make the log string, exiting");
 
     memset(log_str, '\0', (sizeof(char) * (strlen(log_str_head) + strlen(log_str_tail))) + 1);
